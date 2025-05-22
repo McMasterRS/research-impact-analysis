@@ -162,10 +162,11 @@ def get_works_by_corresponding_institution(
     )  # check if the dataframe is empty (i.e., no more pages available)
     # if there are more pages, recursively fetch the next page
     if next_page:
-        df_json_next_page = get_works_by_institution(
+        df_json_next_page = get_works_by_corresponding_institution(
             institution_id,
             publication_year,
             publication_types,
+            publication_oa_statuses,
             page=page + 1,
             items_per_page=items_per_page,
         )
