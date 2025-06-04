@@ -1,1 +1,2 @@
-discount-list.csv
+*.csv
+!discount-list-sample.csv
