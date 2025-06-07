@@ -21,7 +21,11 @@ def get_works_by_dois(dois: List[str], page: int = 1, items_per_page: int = 50):
         pd.DataFrame: A DataFrame containing the works retrieved for the specified DOIs.
     """
     # construct the api url with the given dois, page number, and items per page
-    url = f"https://api.openalex.org/works?filter=doi:{'|'.join(dois)}&page={page}&per-page={items_per_page}"
+    url = (
+        "https://api.openalex.org/works?"
+        f"filter=doi:{'|'.join(dois)}"
+        f"&page={page}&per-page={items_per_page}"
+    )
 
     # send a GET request to the api and parse the json response
     response = requests.get(url)
@@ -56,7 +60,11 @@ def get_works_by_author(author_id: str, page: int = 1, items_per_page: int = 50)
         pd.DataFrame: A DataFrame containing the works retrieved for the specified author.
     """
     # construct the api url with the given author id, page number, and items per page
-    url = f"https://api.openalex.org/works?filter=author.id:{author_id}&page={page}&per-page={items_per_page}"
+    url = (
+        "https://api.openalex.org/works?"
+        f"filter=author.id:{author_id}"
+        f"&page={page}&per-page={items_per_page}"
+    )
 
     # send a GET request to the api and parse the json response
     response = requests.get(url)
@@ -78,55 +86,8 @@ def get_works_by_author(author_id: str, page: int = 1, items_per_page: int = 50)
     return df_json
 
 
-def get_works_by_institution(
-    institution_id: str,
-    publication_year: int,
-    publication_types: List[str],
-    page: int = 1,
-    items_per_page: int = 50,
-):
-    """
-    Fetch works from the OpenAlex API for a given institution.
-
-    Args:
-        institution_id (str): The ID of the institution.
-        publication_year (int): The publication year to filter by.
-        publication_types (List[str]): Types of publications to include.
-        page (int, optional): The current page number for pagination. Defaults to 1.
-        items_per_page (int, optional): Number of records per page. Defaults to 50.
-
-    Returns:
-        pd.DataFrame: A DataFrame containing the retrieved works.
-    """
-    # construct the api url with the given institution id, publication year, publication types, page number, and items per page
-    url = f"https://api.openalex.org/works?filter=corresponding_institution_ids:{institution_id},publication_year:{publication_year},type:{'|'.join(publication_types)}&page={page}&per-page={items_per_page}"
-
-    # send a GET request to the api and parse the json response
-    response = requests.get(url)
-    json_data = response.json()
-
-    # convert the json response to a dataframe
-    df_json = pd.DataFrame.from_dict(json_data["results"])
-
-    next_page = (
-        not df_json.empty
-    )  # check if the dataframe is empty (i.e., no more pages available)
-    # if there are more pages, recursively fetch the next page
-    if next_page:
-        df_json_next_page = get_works_by_institution(
-            institution_id,
-            publication_year,
-            publication_types,
-            page=page + 1,
-            items_per_page=items_per_page,
-        )
-        df_json = pd.concat([df_json, df_json_next_page])
-
-    return df_json
-
-
 def get_works_by_corresponding_institution(
-    institution_id: str,
+    institution_ids: List[str],
     publication_year: int,
     publication_types: List[str],
     publication_oa_statuses: List[str],
@@ -137,7 +98,7 @@ def get_works_by_corresponding_institution(
     Fetches works from the OpenAlex API for a corresponding institution, year, publication types, and OA statuses.
 
     Args:
-        institution_id (str): The ID of the corresponding institution.
+        institution_ids (List[str]): The IDs of the corresponding institution.
         publication_year (int): The publication year to filter by.
         publication_types (List[str]): Types of publications to include.
         publication_oa_statuses (List[str]): Open access statuses to include.
@@ -147,8 +108,15 @@ def get_works_by_corresponding_institution(
     Returns:
         pd.DataFrame: A DataFrame containing works for the specified parameters.
     """
-    # construct the api url with the given institution id, publication year, publication types, publiction open access statuses, page number, and items per page
-    url = f"https://api.openalex.org/works?filter=corresponding_institution_ids:{institution_id},publication_year:{publication_year},type:{'|'.join(publication_types)},oa_status:{'|'.join(publication_oa_statuses)}&page={page}&per-page={items_per_page}"
+    # construct the api url with the given institution ids, publication year, publication types, publiction open access statuses, page number, and items per page
+    url = (
+        "https://api.openalex.org/works?"
+        f"filter=corresponding_institution_ids:{'|'.join(institution_ids)},"
+        f"publication_year:{publication_year},"
+        f"type:{'|'.join(publication_types)},"
+        f"oa_status:{'|'.join(publication_oa_statuses)}"
+        f"&page={page}&per-page={items_per_page}"
+    )
 
     # send a GET request to the api and parse the json response
     response = requests.get(url)
@@ -163,7 +131,7 @@ def get_works_by_corresponding_institution(
     # if there are more pages, recursively fetch the next page
     if next_page:
         df_json_next_page = get_works_by_corresponding_institution(
-            institution_id,
+            institution_ids,
             publication_year,
             publication_types,
             publication_oa_statuses,
@@ -191,7 +159,12 @@ def get_works_by_ror(
         pd.DataFrame: A DataFrame containing the retrieved works.
     """
     # construct the api url with the given ror id, publication year, publication types, page number, and items per page
-    url = f"https://api.openalex.org/works?filter=institutions.ror:{ror_id},publication_year:{publication_year}&page={page}&per-page={items_per_page}"
+    url = (
+        "https://api.openalex.org/works?"
+        f"filter=institutions.ror:{ror_id},"
+        f"publication_year:{publication_year}"
+        f"&page={page}&per-page={items_per_page}"
+    )
 
     # send a GET request to the api and parse the json response
     response = requests.get(url)
@@ -243,7 +216,11 @@ def get_all_outgoing_referenced_works(work_ids: List[str]):
             pd.DataFrame: A DataFrame of outgoing references for the work.
         """
         # construct the api url with the given work id, page number, and items per page
-        url = f"https://api.openalex.org/works?filter=cited_by:{work_id}&page={page}&per-page={items_per_page}"
+        url = (
+            "https://api.openalex.org/works?"
+            f"filter=cited_by:{work_id}"
+            f"&page={page}&per-page={items_per_page}"
+        )
 
         # send a GET request to the api and parse the json response
         response = requests.get(url)
@@ -301,7 +278,11 @@ def get_all_incoming_referenced_works(work_ids: List[str]):
             pd.DataFrame: A DataFrame of citing works for the given work ID.
         """
         # construct the api url with the given work id, page number, and items per page
-        url = f"https://api.openalex.org/works?filter=cites:{work_id}&page={page}&per-page={items_per_page}"
+        url = (
+            "https://api.openalex.org/works?"
+            f"filter=cites:{work_id}"
+            f"&page={page}&per-page={items_per_page}"
+        )
 
         # send a GET request to the api and parse the json response
         response = requests.get(url)
