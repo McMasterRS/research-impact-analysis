@@ -86,7 +86,7 @@ def get_works_by_author(author_id: str, page: int = 1, items_per_page: int = 50)
     return df_json
 
 
-def get_works_by_corresponding_institution(
+def get_works_by_corresponding_institutions(
     institution_ids: List[str],
     publication_year: int,
     publication_types: List[str],
@@ -95,7 +95,7 @@ def get_works_by_corresponding_institution(
     items_per_page: int = 50,
 ):
     """
-    Fetches works from the OpenAlex API for a corresponding institution, year, publication types, and OA statuses.
+    Fetches works from the OpenAlex API for corresponding institutions, year, publication types, and OA statuses.
 
     Args:
         institution_ids (List[str]): The IDs of the corresponding institution.
@@ -130,7 +130,7 @@ def get_works_by_corresponding_institution(
     )  # check if the dataframe is empty (i.e., no more pages available)
     # if there are more pages, recursively fetch the next page
     if next_page:
-        df_json_next_page = get_works_by_corresponding_institution(
+        df_json_next_page = get_works_by_corresponding_institutions(
             institution_ids,
             publication_year,
             publication_types,
