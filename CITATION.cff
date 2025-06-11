@@ -20,6 +20,13 @@ authors:
     email: jkyoung@mcmaster.ca
     affiliation: 'McMaster University Libraries, McMaster University'
     orcid: 'https://orcid.org/0000-0003-4626-0409'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.15640544
+    description: The DOI representing all of the versions of this work
+  - type: swh
+    value: 'swh:1:dir:fc26adbbf69c4abcafa61e789184ec5ec526ea76'
+    description: SWHID of the initial release
 repository-code: 'https://github.com/McMasterRS/research-impact-analysis.git'
 keywords:
   - research impact
