@@ -1,0 +1,45 @@
+{
+    "@context": "https://w3id.org/codemeta/3.0",
+    "type": "SoftwareSourceCode",
+    "author": [
+        {
+            "id": "https://orcid.org/0009-0000-7340-3204",
+            "type": "Person",
+            "affiliation": {
+                "type": "Organization",
+                "name": "Research Software Development and Support, McMaster University Libraries, McMaster University"
+            },
+            "email": "lee887@mcmaster.ca",
+            "familyName": "Lee",
+            "givenName": "Kelvin"
+        },
+        {
+            "id": "https://orcid.org/0000-0003-4626-0409",
+            "type": "Person",
+            "affiliation": {
+                "type": "Organization",
+                "name": "McMaster University Libraries, McMaster University"
+            },
+            "email": "jkyoung@mcmaster.ca",
+            "familyName": "Young",
+            "givenName": "Jack"
+        }
+    ],
+    "codeRepository": "https://github.com/McMasterRS/research-impact-analysis.git",
+    "identifier": "https://doi.org/10.5281/zenodo.15640544",
+    "keywords": [
+        "research impact",
+        "bibliometrics",
+        "apc"
+    ],
+    "license": "https://spdx.org/licenses/MIT",
+    "name": "McMaster Research Impact Analysis",
+    "programmingLanguage": "Python 3",
+    "softwareRequirements": [
+        "https://pypi.org/project/pandas/",
+        "https://pypi.org/project/numpy/",
+        "https://pypi.org/project/requests/",
+        "https://pypi.org/project/matplotlib/"
+    ],
+    "issueTracker": "https://github.com/McMasterRS/research-impact-analysis/issues"
+}
