@@ -1,0 +1,28 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: McMaster Research Impact Analysis
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Kelvin
+    family-names: Lee
+    email: lee887@mcmaster.ca
+    affiliation: >-
+      Research Software Development and Support, McMaster
+      University Libraries, McMaster University
+    orcid: 'https://orcid.org/0009-0000-7340-3204'
+  - given-names: Jack
+    family-names: Young
+    email: jkyoung@mcmaster.ca
+    affiliation: 'McMaster University Libraries, McMaster University'
+    orcid: 'https://orcid.org/0000-0003-4626-0409'
+repository-code: 'https://github.com/McMasterRS/research-impact-analysis.git'
+keywords:
+  - research impact
+  - bibliometrics
+  - apc
+license: MIT
