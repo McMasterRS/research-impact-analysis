@@ -4,7 +4,7 @@ This project contains code to query data from [OpenAlex APIs](https://docs.opena
 
 ## Usage
 
-The notebooks can be run on either [Google Colab](https://colab.research.google.com/) or [Jupyter Notebook](https://jupyter.org/install).  
+The notebooks can be run on either [Google Colab](https://colab.research.google.com/) or [Jupyter Notebook](https://jupyter.org/install). An instruction to run the notebooks on Syzygy, a JupyterHub service provided by Digital Research Alliance of Canada, is provided in the [`docs/syzygy.md`](docs/syzygy.md).  
 
 ## OpenAlex API Limitation
 
