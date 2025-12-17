@@ -1,4 +1,4 @@
-COLORS_PALETTE = [
+COLOR_PALETTE = [
     "#7A003C",
     "#FDBF57",
     "#0D5D78",
