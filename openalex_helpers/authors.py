@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+from pyalex import Authors
 
 
 def get_authors_by_name_and_rors(name: str, ror_ids: list[str]):
@@ -13,14 +14,16 @@ def get_authors_by_name_and_rors(name: str, ror_ids: list[str]):
     Returns:
         pandas.DataFrame: A pandas DataFrame containing authors matching the name and ROR IDs.
     """
-    # construct the api url with the given author's name and ror ids
-    url = f"https://api.openalex.org/authors?search={name}&filter=affiliations.institution.ror:{'|'.join(ror_ids)}"
+    json_data = (
+        Authors()
+            .search(name)
+            .filter_or(affiliations={
+                "institution": {
+                    "ror": ror_ids
+                }
+            })
+            .get()
+    )
+    df = pd.DataFrame(json_data)
 
-    # send a GET request to the api and parse the json response
-    response = requests.get(url)
-    json_data = response.json()
-
-    # convert the json response to a dataframe
-    df_json = pd.DataFrame.from_dict(json_data["results"])
-
-    return df_json
+    return df

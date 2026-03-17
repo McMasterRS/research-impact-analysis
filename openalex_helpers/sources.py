@@ -4,20 +4,16 @@ from typing import List
 import numpy as np
 import pandas as pd
 import requests
+from pyalex import Institutions, Publishers
+
 
 def get_publisher_display_name_lookup_table(publisher_ids: List[str], num_chunk: int = 5) -> pd.DataFrame:
     def get_source_host_organization_publisher_display_name(publisher_ids):
         def get_source_host_organization_publisher_display_name_by_chunk(publisher_ids_chunk):
-            # construct the api url using the chunk of publisher ids
-            url = f"https://api.openalex.org/publishers?filter=ids.openalex:{'|'.join(publisher_ids_chunk)}"
+            json_data = Publishers().filter_or(ids={"openalex": publisher_ids_chunk}).get()
+            df = pd.DataFrame(json_data)
 
-            # send a GET request to the api and parse the json response
-            response = requests.get(url)
-            json_data = response.json()
-
-            # convert the json response to a dataframe and return the relevant columns
-            df_json = pd.DataFrame.from_dict(json_data["results"])
-            return df_json[["id", "display_name"]]
+            return df[["id", "display_name"]]
         
         # check if the length of 'publisher_ids' is less than 1
         if len(publisher_ids) < 1:
@@ -31,16 +27,10 @@ def get_publisher_display_name_lookup_table(publisher_ids: List[str], num_chunk:
 
     def get_source_host_organization_institution_display_name(institution_ids):
         def get_source_host_organization_institution_display_name_by_chunk(institution_ids_chunk):
-            # construct the api url using the chunk of institution ids
-            url = f"https://api.openalex.org/institutions?filter=id:{'|'.join(institution_ids_chunk)}"
+            json_data = Institutions().filter_or(id=publisher_ids_chunk).get()
+            df = pd.DataFrame(json_data)
 
-            # send a GET request to the api and parse the json response
-            response = requests.get(url)
-            json_data = response.json()
-
-            # convert the json response to a dataframe and return the relevant columns
-            df_json = pd.DataFrame.from_dict(json_data["results"])
-            return df_json[["id", "display_name"]]
+            return df[["id", "display_name"]]
 
         # check if the length of 'institution_ids' is less than 1
         if len(institution_ids) < 1:
