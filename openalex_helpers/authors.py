@@ -1,5 +1,4 @@
 import pandas as pd
-import requests
 from pyalex import Authors
 
 
@@ -16,13 +15,9 @@ def get_authors_by_name_and_rors(name: str, ror_ids: list[str]):
     """
     json_data = (
         Authors()
-            .search(name)
-            .filter_or(affiliations={
-                "institution": {
-                    "ror": ror_ids
-                }
-            })
-            .get()
+        .search(name)
+        .filter_or(affiliations={"institution": {"ror": ror_ids}})
+        .get()
     )
     df = pd.DataFrame(json_data)
 

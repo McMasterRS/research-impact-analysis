@@ -1,7 +1,6 @@
 from typing import List
 
 import pandas as pd
-import requests
 from pyalex import Works
 
 
@@ -61,11 +60,11 @@ def get_works_by_corresponding_institutions(
     """
     json_data = (
         Works()
-            .filter_or(corresponding_institution_ids=institution_ids)
-            .filter(publication_year=publication_year)
-            .filter_or(type=publication_types)
-            .filter_or(oa_status=publication_oa_statuses)
-            .get()
+        .filter_or(corresponding_institution_ids=institution_ids)
+        .filter(publication_year=publication_year)
+        .filter_or(type=publication_types)
+        .filter_or(oa_status=publication_oa_statuses)
+        .get()
     )
     df = pd.DataFrame(json_data)
 
@@ -85,9 +84,9 @@ def get_works_by_ror(ror_id: str, publication_year: int):
     """
     json_data = (
         Works()
-            .filter(institutions={"ror": ror_id})
-            .filter(publication_year=publication_year)
-            .get()
+        .filter(institutions={"ror": ror_id})
+        .filter(publication_year=publication_year)
+        .get()
     )
     df = pd.DataFrame(json_data)
 

@@ -1,7 +1,5 @@
-from pyalex import Institutions
-
 import pandas as pd
-import requests
+from pyalex import Institutions
 
 
 def get_institution_by_ror(ror_id: str):
@@ -18,3 +16,4 @@ def get_institution_by_ror(ror_id: str):
     df = pd.DataFrame(json_data)
 
     return df.iloc[0]
+
