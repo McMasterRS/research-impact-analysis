@@ -1,5 +1,7 @@
 # research-impact-analysis
 
+[![DOI](https://zenodo.org/badge/979593614.svg)](https://doi.org/10.5281/zenodo.15640544)
+
 This project contains code to query data from [OpenAlex APIs](https://docs.openalex.org/). The OpenAlex dataset describes scholarly entities and how those entities are connected to each other. Types of entities include works, authors, sources, institutions, topics, publishers, and funders.  
 
 ## Usage
