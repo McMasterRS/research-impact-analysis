@@ -14,7 +14,9 @@ def get_publisher_display_name_lookup_table(
             publisher_ids_chunk,
         ):
             json_data = (
-                Publishers().filter_or(ids={"openalex": publisher_ids_chunk}).get()
+                Publishers()
+                .filter_or(ids={"openalex": publisher_ids_chunk.tolist()})
+                .get()
             )
             df = pd.DataFrame(json_data)
 
@@ -38,7 +40,9 @@ def get_publisher_display_name_lookup_table(
         def get_source_host_organization_institution_display_name_by_chunk(
             institution_ids_chunk,
         ):
-            json_data = Institutions().filter_or(id=publisher_ids_chunk).get()
+            json_data = (
+                Institutions().filter_or(id=institution_ids_chunk.tolist()).get()
+            )
             df = pd.DataFrame(json_data)
 
             return df[["id", "display_name"]]
